@@ -15,6 +15,7 @@ import frc.robot.commands.vision.AcquireGamePiece;
 import frc.robot.commands.vision.AcquireGamePiecePID;
 import frc.robot.commands.vision.AimAtTag;
 import frc.robot.commands.vision.AlignToTag;
+import frc.robot.commands.vision.AvoidStaticObstacle;
 import frc.robot.commands.vision.CalculateStdDevs;
 import frc.robot.commands.vision.ReturnData;
 import frc.robot.commands.vision.TestVisionDistance;
@@ -58,6 +59,7 @@ public class VisionTab extends ShuffleBoardTabs {
         tab.add("Acquire game piece", new AcquireGamePiece(()->vision.getBestGamePiece(Math.PI), drive));
         SmartDashboard.putData("Return visin data", new ReturnData(vision));
         tab.add("Return data", new ReturnData(vision));
+        tab.add("AvoidStaticObstacle", new AvoidStaticObstacle(vision, drive));
     }
 
 }
