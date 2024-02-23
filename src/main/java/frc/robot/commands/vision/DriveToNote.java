@@ -18,6 +18,9 @@ public class DriveToNote extends Command {
   private Supplier<DetectedObject> objectSupplier;
   private DetectedObject object;
   private double angle;
+  private double start_time; 
+  private double end_time; 
+  private int execute_run_counter; 
 
   /**
    * Moves toward the detected object
@@ -38,7 +41,10 @@ public class DriveToNote extends Command {
   @Override
   public void initialize(){
     object = objectSupplier.get();
-    angle = object.getAngle();
+    drive.stop();
+    start_time = System.currentTimeMillis(); 
+    execute_run_counter = 0;
+
   }
 
   /**
@@ -51,8 +57,30 @@ public class DriveToNote extends Command {
       return;
     }
 
-    drive.driveHeading(speed*Math.cos(angle), speed*Math.sin(angle), angle, true);
+    end_time = System.currentTimeMillis(); 
+    
+    //Give drivetrain adequate time to stop. 
+    if(end_time-start_time <= 40){
+      return; 
+    } 
+    
+    else{
+      //Increment this counter every time we are over 40ms. 
+      execute_run_counter +=1; 
+
+      //Get a reading of the x-offset. Only do this once i.e the first time we are over 40 ms i.e when execute_run_counter is 1. 
+      if(execute_run_counter == 1){
+        angle = object.getCameraRelativeAngle(); 
+      }
+      
+      //All other times that we are over 40 ms, just drive with the angle towards the note.  
+      if(execute_run_counter >1){
+        drive.driveHeading(speed*Math.cos(angle), speed*Math.sin(angle), angle, true);
+      }
+    }
+
   }
+  
 
   /**
    * If the command is finished
