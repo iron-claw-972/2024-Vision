@@ -51,10 +51,6 @@ public class DriveToNote extends Command {
    */
   @Override
   public void execute() {
-    if(object == null){
-      drive.stop();
-      return;
-    }
 
     end_time = System.currentTimeMillis(); 
     
@@ -71,6 +67,12 @@ public class DriveToNote extends Command {
       if(execute_run_counter == 1){
         object = objectSupplier.get();
         angle = object.getRelativeAngle(); 
+        
+        if(object == null){
+          drive.stop();
+          return;
+        }
+
       }
       
       //All other times that we are over 40 ms, just drive with the angle towards the note.  
