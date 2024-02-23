@@ -70,12 +70,12 @@ public class DriveToNote extends Command {
 
       //Get a reading of the x-offset. Only do this once i.e the first time we are over 40 ms i.e when execute_run_counter is 1. 
       if(execute_run_counter == 1){
-        angle = object.getCameraRelativeAngle(); 
+        ;//angle = object.getCameraRelativeAngle(); 
       }
       
       //All other times that we are over 40 ms, just drive with the angle towards the note.  
       if(execute_run_counter >1){
-        drive.driveHeading(speed*Math.cos(angle), speed*Math.sin(angle), angle, true);
+        ;//drive.driveHeading(speed*Math.cos(angle), speed*Math.sin(angle), angle, true);
       }
     }
 
