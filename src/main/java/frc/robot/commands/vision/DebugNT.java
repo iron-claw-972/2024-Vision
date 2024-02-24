@@ -15,7 +15,7 @@ import frc.robot.util.Vision;
 /**
  * Adds data from object detection vision to SmartDashboard
  */
-public class AvoidStaticObstacle extends CommandBase{
+public class DebugNT extends CommandBase{
   private final Drivetrain m_drive;
   private DoublePublisher xPub;
   private DoublePublisher yPub;
@@ -31,7 +31,7 @@ public class AvoidStaticObstacle extends CommandBase{
    * Adds data from object detection vision to Smartdashboard
    * @param vision The vision
    */
-  public AvoidStaticObstacle(Vision vision, Drivetrain drive){
+  public DebugNT(Vision vision, Drivetrain drive){
     m_drive = drive; 
 
     NetworkTableInstance inst = NetworkTableInstance.getDefault();
@@ -41,8 +41,6 @@ public class AvoidStaticObstacle extends CommandBase{
     xPub = table.getDoubleTopic("x").publish();
     yPub = table.getDoubleTopic("y").publish();
     driveAngleSub = table.getDoubleTopic("moveAngle").subscribe(0);
-
-    addRequirements(drive);
   }
   
   /**
@@ -60,10 +58,10 @@ public class AvoidStaticObstacle extends CommandBase{
     yPub.set(-y);
 
     driveAngle = driveAngleSub.get();
-    xSpeed = 1 * Math.cos(Math.toRadians(driveAngle));    
-    ySpeed = 1 * Math.sin(Math.toRadians(driveAngle));    
+    xSpeed = 1 * Math.cos(Math.toRadians(-driveAngle));    
+    ySpeed = 1 * Math.sin(Math.toRadians(-driveAngle));    
 
-    m_drive.drive(xSpeed,ySpeed,0,true,false); 
+    //m_drive.drive(xSpeed,ySpeed,0,true,false); 
   }
 
   /**
